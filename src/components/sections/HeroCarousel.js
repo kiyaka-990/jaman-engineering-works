@@ -17,7 +17,7 @@ const slides = [
     cta2Link: '/projects',
   },
   {
-    image: '/images/hero-1.JPG',
+    image: '/images/hero-1.jpg',
     badge: 'Infrastructure Leaders',
     title: 'Roads That',
     titleAccent: 'Connect',
