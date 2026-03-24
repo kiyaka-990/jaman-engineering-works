@@ -51,6 +51,23 @@ const slides = [
   },
 ]
 
+// Pre-computed particle positions — deterministic, same on server & client
+// Generated once at module load (not in render), so no hydration mismatch
+const PARTICLES = Array.from({ length: 15 }, (_, i) => {
+  // Simple deterministic pseudo-random based on index
+  const seed = (i * 2654435761) >>> 0
+  const a = ((seed ^ (seed >> 16)) * 0x45d9f3b) >>> 0
+  const b = ((a ^ (a >> 16)) * 0x45d9f3b) >>> 0
+  const c = ((b ^ (b >> 16))) >>> 0
+  return {
+    w:     3 + (a % 100) / 20,           // 3–8 px
+    x:     (b % 10000) / 100,            // 0–100%
+    y:     (c % 10000) / 100,            // 0–100%
+    dur:   4 + (a % 100) / 16.7,         // 4–10s
+    delay: (b % 400) / 100,              // 0–4s
+  }
+})
+
 const INTERVAL = 6000
 
 export default function HeroCarousel() {
@@ -125,18 +142,18 @@ export default function HeroCarousel() {
       {/* Grid overlay */}
       <div className="absolute inset-0 z-10 grid-overlay pointer-events-none" />
 
-      {/* Particles */}
+      {/* Particles — fixed deterministic values, no Math.random() in render */}
       <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+        {PARTICLES.map((p, i) => (
           <div key={i} className="particle"
             style={{
-              width: `${3 + Math.random() * 5}px`,
-              height: `${3 + Math.random() * 5}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              width: `${p.w}px`,
+              height: `${p.w}px`,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
               background: i % 2 === 0 ? 'rgba(204,26,26,0.6)' : 'rgba(91,155,213,0.5)',
-              '--duration': `${4 + Math.random() * 6}s`,
-              '--delay': `${Math.random() * 4}s`,
+              '--duration': `${p.dur}s`,
+              '--delay': `${p.delay}s`,
             }}
           />
         ))}

@@ -121,7 +121,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="section-container py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs opacity-30">© {new Date().getFullYear()} Jaman Engineering Works Limited. All rights reserved.</p>
+          <p className="text-xs opacity-30" suppressHydrationWarning>© {new Date().getFullYear()} Jaman Engineering Works Limited. All rights reserved.</p>
           <div className="flex items-center gap-4 text-xs opacity-30">
             <span>NCA Registered</span>
             <span>•</span>

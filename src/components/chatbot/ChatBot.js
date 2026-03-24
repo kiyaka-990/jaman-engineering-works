@@ -72,7 +72,7 @@ const KB = {
 }
 
 /* ─── RULE-BASED REPLY ───────────────────────────────────────────────────── */
-function getReply(raw) {
+function getReply(raw, historyLen = 0) {
   const m = raw.toLowerCase()
   const h = (...t) => t.some(w => m.includes(w))
 
@@ -132,7 +132,8 @@ function getReply(raw) {
     `Great question! We specialise in:\n• ⚙️ **Mechanical Works** — our core specialty\n• ⚡ Electrical installations\n• 🏗️ Civil & structural\n• 🔧 Maintenance & AMC\n\nWhat would you like to know more about?`,
     `For the most accurate answer:\n\n📞 **${KB.phone}** (call or WhatsApp)\n✉️ ${KB.email}\n⏰ Mon–Sat, 8AM–6PM\n\nWe love talking engineering! 😊`,
   ]
-  return opts[Math.floor(Date.now() / 9000) % opts.length]
+  // Use history length as cycle index — deterministic, no Date.now() in render
+  return opts[historyLen % opts.length]
 }
 
 /* ─── MENU DATA ──────────────────────────────────────────────────────────── */
@@ -287,10 +288,11 @@ export default function ChatBot() {
   const [open,      setOpen]      = useState(false)
   const [view,      setView]      = useState('menu')
   const [messages,  setMessages]  = useState([])
-  const [input,     setInput]     = useState('')
   const [loading,   setLoading]   = useState(false)
   const [showPopup, setShowPopup] = useState(false)
   const [dismissed, setDismissed] = useState(false)
+  // Use uncontrolled input — avoids re-render on every keystroke (fixes INP)
+  const [inputVal,  setInputVal]  = useState('')
   const endRef   = useRef(null)
   const inputRef = useRef(null)
 
@@ -312,16 +314,27 @@ export default function ChatBot() {
   }, [messages])
 
   const send = useCallback(async (override) => {
-    const text = (override || input).trim()
+    // Read from ref (uncontrolled) or override chip text
+    const text = (override ?? (inputRef.current?.value ?? '')).trim()
     if (!text || loading) return
-    setInput('')
+
+    // Clear input immediately so UI feels instant (before any async work)
+    if (inputRef.current) inputRef.current.value = ''
+    setInputVal('')  // sync display state for send-button disabled
+
     const updated = [...messages, { role: 'user', content: text }]
     setMessages(updated)
     setLoading(true)
-    await new Promise(r => setTimeout(r, 600 + Math.min(text.length * 7, 900)))
-    setLoading(false)
-    setMessages(prev => [...prev, { role: 'bot', content: getReply(text) }])
-  }, [input, loading, messages])
+
+    // Defer heavy getReply() off the current event-loop tick
+    // so the browser can paint the new message first (fixes INP)
+    setTimeout(async () => {
+      const delay = 600 + Math.min(text.length * 7, 900)
+      await new Promise(r => setTimeout(r, delay))
+      setLoading(false)
+      setMessages(prev => [...prev, { role: 'bot', content: getReply(text, prev.length) }])
+    }, 0)
+  }, [loading, messages])
 
   const reset = () => { setMessages([]); setView('menu') }
 
@@ -558,8 +571,16 @@ export default function ChatBot() {
                 <div style={{ display:'flex', alignItems:'center', gap:8 }}>
                   <input
                     ref={inputRef}
-                    type="text" value={input} onChange={e => setInput(e.target.value)}
-                    onKeyDown={e => { if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); send() } }}
+                    type="text"
+                    defaultValue=""
+                    onChange={e => setInputVal(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        // Read value directly from DOM — no state lookup needed
+                        send(inputRef.current?.value)
+                      }
+                    }}
                     placeholder="Ask about HVAC, pipework, quotes…"
                     aria-label="Type your message"
                     style={{
@@ -570,7 +591,7 @@ export default function ChatBot() {
                     onFocus={e => { e.target.style.borderColor=C.inputFocusBd; e.target.style.boxShadow='0 0 0 3px rgba(13,42,110,0.2)' }}
                     onBlur={e => { e.target.style.borderColor=C.inputBd; e.target.style.boxShadow='none' }}
                   />
-                  <button onClick={() => send()} disabled={!input.trim() || loading}
+                  <button onClick={() => send(inputRef.current?.value)} disabled={!inputVal.trim() || loading}
                     aria-label="Send"
                     style={{
                       width:40, height:40, borderRadius:12, border:'none', cursor:'pointer',
