@@ -28,7 +28,7 @@ const slides = [
     cta2Link: '/contact',
   },
   {
-    image: '/images/hero-6.jpg',
+    image: '/images/hero-3.jpg',
     badge: '200+ Completed Projects',
     title: 'Built to',
     titleAccent: 'Last',
