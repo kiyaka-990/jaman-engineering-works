@@ -59,12 +59,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-5">
-              <img src="/logo.png" alt="Jaman Engineering Logo" className="w-14 h-14 object-contain" style={{ filter: 'brightness(1.1)' }} />
-              <div>
-                <div className="font-black text-xl" style={{ fontFamily: 'Barlow Condensed,sans-serif', color: '#cc1a1a' }}>JAMAN</div>
-                <div className="text-[0.58rem] tracking-[0.18em] uppercase" style={{ color: '#5b9bd5', opacity: 0.85 }}>Engineering Works Limited</div>
-              </div>
+            <Link href="/" className="flex items-center mb-5">
+              {/* Footer is always dark background — use the dark logo */}
+              <img
+                src="/logo-dark.png"
+                alt="Jaman Engineering Works Limited"
+                className="h-16 w-auto object-contain"
+                style={{ filter: 'drop-shadow(0 2px 10px rgba(13,42,110,0.4))' }}
+              />
             </Link>
 
             <p className="text-sm opacity-50 leading-relaxed mb-6 max-w-sm">
@@ -73,9 +75,9 @@ export default function Footer() {
 
             <div className="space-y-3 mb-6">
               {[
-                { icon: Phone, text: '+254 733 315 621', href: 'tel:+254700000000' },
+                { icon: Phone, text: '+254 733 315 621', href: 'tel:+254733315621' },
                 { icon: Mail, text: 'info@jamanengineering.co.ke', href: 'mailto:info@jamanengineering.co.ke' },
-                { icon: MapPin, text: 'Re-Plaza, Upper Hill, Re-Plaza, Upper Hill, Nairobi', href: '#' },
+                { icon: MapPin, text: 'Re-Plaza, Upper Hill, Nairobi', href: '#' },
               ].map(({ icon: Icon, text, href }) => (
                 <a key={text} href={href}
                   className="flex items-center gap-3 text-xs opacity-50 hover:opacity-90 transition-opacity">

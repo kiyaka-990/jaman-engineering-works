@@ -8,9 +8,6 @@ import {
   Building2, Truck, Cog, Droplets, Hammer, BarChart3, ArrowRight
 } from 'lucide-react'
 
-// ── LOGO as inline SVG recreation (Engineering Works Limited branding) ────────
-const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAbAAAAENCAYAAABuGjCBAAEAAElEQVR4nOz9d7glx3XeC/+qqsMOJ86ciZhBzoEAicQkiDlKlGlS'
-
 // ── NAV DATA ──────────────────────────────────────────────────────────────────
 const serviceLinks = [
   { label: 'Mechanical Works', desc: 'HVAC, pipework, fire systems', icon: Cog, color: '#cc1a1a', href: '/services#mechanical', badge: 'Primary' },
@@ -96,29 +93,23 @@ export default function Navbar() {
         }}
       >
         <nav className="section-container flex items-center justify-between py-3" aria-label="Main navigation">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group" aria-label="Jaman Engineering Home">
-            {/* Logo image */}
-            <div className="relative h-12 w-auto flex-shrink-0">
+          {/* Logo — dark mode uses logo-dark.png, light mode uses logo-light.png */}
+          <Link href="/" className="flex items-center group" aria-label="Jaman Engineering Home">
+            <div className="relative h-14 w-auto flex-shrink-0">
+              {/* Dark mode logo */}
               <img
-                src="/logo.png"
-                alt="Jaman Engineering Logo"
-                className="h-12 w-auto object-contain"
-                style={{ filter: 'drop-shadow(0 2px 8px rgba(13,42,110,0.3))' }}
-                onError={(e) => {
-                  // Fallback if logo.png missing
-                  e.target.style.display = 'none'
-                }}
+                src="/logo-dark.png"
+                alt="Jaman Engineering Works Limited"
+                className={`h-14 w-auto object-contain transition-opacity duration-300 ${dark ? 'opacity-100' : 'opacity-0 absolute inset-0'}`}
+                style={{ filter: 'drop-shadow(0 2px 10px rgba(13,42,110,0.35))' }}
               />
-            </div>
-            {/* Text */}
-            <div>
-              <div className="font-black leading-none tracking-wider" style={{ fontFamily: 'Barlow Condensed,sans-serif', fontSize: '1.35rem', color: '#cc1a1a' }}>
-                JAMAN
-              </div>
-              <div className="text-[0.55rem] font-bold tracking-[0.18em] uppercase leading-tight" style={{ color: dark ? '#5b9bd5' : '#0d2a6e' }}>
-                Engineering Works Limited
-              </div>
+              {/* Light mode logo */}
+              <img
+                src="/logo-light.png"
+                alt="Jaman Engineering Works Limited"
+                className={`h-14 w-auto object-contain transition-opacity duration-300 ${dark ? 'opacity-0 absolute inset-0' : 'opacity-100'}`}
+                style={{ filter: 'drop-shadow(0 2px 10px rgba(13,42,110,0.2))' }}
+              />
             </div>
           </Link>
 
