@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Play, ArrowDown } from 'lucide-react'
 
 const slides = [
   {
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=85',
+    image: '/images/hero.jpg',
     badge: 'Building Kenya\'s Future',
     title: 'Engineering',
     titleAccent: 'Excellence',
@@ -28,7 +28,7 @@ const slides = [
     cta2Link: '/contact',
   },
   {
-    image: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1920&q=85',
+    image: '/images/hero-6.jpg',
     badge: '200+ Completed Projects',
     title: 'Built to',
     titleAccent: 'Last',
@@ -39,7 +39,7 @@ const slides = [
     cta2Link: '/about',
   },
   {
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1920&q=85',
+    image: '/images/hero-1.jpg',
     badge: 'NCA Registered',
     title: 'Trusted',
     titleAccent: 'Partners',
