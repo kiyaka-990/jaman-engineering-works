@@ -324,7 +324,7 @@ export default function ContactPage() {
 
       {/* Google Maps embed — Re-Plaza Upper Hill Nairobi */}
       <section id="map" aria-label="Our location on Google Maps">
-        <div style={{ height: '420px', position: 'relative' }}>
+        <div style={{ height: 'min(420px, 55vw)', minHeight: '240px', position: 'relative' }}>
           {/* Map header overlay */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
             <div className="glass-heavy px-5 py-2.5 rounded-full flex items-center gap-2.5 shadow-xl">
@@ -338,7 +338,7 @@ export default function ContactPage() {
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8115738959766!2d36.81457307496601!3d-1.2963694987117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10a3c7b2a155%3A0x1e0d4e8e8e8e8e8e!2sUpper%20Hill%2C%20Nairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1703000000000!5m2!1sen!2ske"
             width="100%"
-            height="420"
+            height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"

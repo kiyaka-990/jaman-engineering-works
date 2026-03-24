@@ -136,11 +136,14 @@ export default function Navbar() {
                       <ChevronDown size={13} className={`transition-transform duration-250 ${servicesOpen ? 'rotate-180' : ''}`} />
                     </button>
 
-                    {/* MEGA DROPDOWN — badge style */}
+                    {/* MEGA DROPDOWN — badge style, responsive */}
                     {servicesOpen && (
                       <div
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[640px] animate-slide-down"
+                        className="absolute top-full mt-3 animate-slide-down"
                         style={{
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          width: 'min(640px, calc(100vw - 32px))',
                           background: dark ? 'rgba(6,6,20,0.97)' : 'rgba(255,255,255,0.98)',
                           backdropFilter: 'blur(40px) saturate(200%)',
                           border: `1px solid ${dark ? 'rgba(204,26,26,0.2)' : 'rgba(13,42,110,0.12)'}`,
