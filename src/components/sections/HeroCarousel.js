@@ -17,7 +17,7 @@ const slides = [
     cta2Link: '/projects',
   },
   {
-    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=85',
+    image: '/images/hero-1.JPG',
     badge: 'Infrastructure Leaders',
     title: 'Roads That',
     titleAccent: 'Connect',
@@ -133,31 +133,12 @@ export default function HeroCarousel() {
             priority={i === 0}
             sizes="100vw"
           />
+          {/* Minimal bottom scrim only — keeps text readable without hiding the image */}
           <div className="absolute inset-0" style={{
-            background: 'linear-gradient(135deg, rgba(5,5,15,0.85) 0%, rgba(13,42,110,0.6) 50%, rgba(204,26,26,0.3) 100%)'
+            background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, transparent 70%)'
           }} />
         </div>
       ))}
-
-      {/* Grid overlay */}
-      <div className="absolute inset-0 z-10 grid-overlay pointer-events-none" />
-
-      {/* Particles — fixed deterministic values, no Math.random() in render */}
-      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        {PARTICLES.map((p, i) => (
-          <div key={i} className="particle"
-            style={{
-              width: `${p.w}px`,
-              height: `${p.w}px`,
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              background: i % 2 === 0 ? 'rgba(204,26,26,0.6)' : 'rgba(91,155,213,0.5)',
-              '--duration': `${p.dur}s`,
-              '--delay': `${p.delay}s`,
-            }}
-          />
-        ))}
-      </div>
 
       {/* Content */}
       <div className="absolute inset-0 z-20 flex items-center">

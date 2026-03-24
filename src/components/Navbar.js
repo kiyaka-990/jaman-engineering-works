@@ -93,22 +93,22 @@ export default function Navbar() {
         }}
       >
         <nav className="section-container flex items-center justify-between py-3" aria-label="Main navigation">
-          {/* Logo — dark mode uses logo-dark.png, light mode uses logo-light.png */}
+          {/* Logo */}
           <Link href="/" className="flex items-center group" aria-label="Jaman Engineering Home">
-            <div className="relative h-14 w-auto flex-shrink-0">
-              {/* Dark mode logo */}
+            <div className="relative h-14 flex-shrink-0 flex items-center">
               <img
                 src="/logo-dark.png"
                 alt="Jaman Engineering Works Limited"
-                className={`h-14 w-auto object-contain transition-opacity duration-300 ${dark ? 'opacity-100' : 'opacity-0 absolute inset-0'}`}
-                style={{ filter: 'drop-shadow(0 2px 10px rgba(13,42,110,0.35))' }}
+                className={`h-14 w-auto object-contain transition-opacity duration-300 ${dark ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
+                style={{ filter: 'drop-shadow(0 2px 8px rgba(13,42,110,0.25))' }}
+                onError={function(e) { e.currentTarget.style.display = 'none' }}
               />
-              {/* Light mode logo */}
               <img
                 src="/logo-light.png"
                 alt="Jaman Engineering Works Limited"
-                className={`h-14 w-auto object-contain transition-opacity duration-300 ${dark ? 'opacity-0 absolute inset-0' : 'opacity-100'}`}
-                style={{ filter: 'drop-shadow(0 2px 10px rgba(13,42,110,0.2))' }}
+                className={`h-14 w-auto object-contain transition-opacity duration-300 ${dark ? 'opacity-0 absolute inset-0 pointer-events-none' : 'opacity-100'}`}
+                style={{ filter: 'drop-shadow(0 2px 8px rgba(13,42,110,0.15))' }}
+                onError={function(e) { e.currentTarget.style.display = 'none' }}
               />
             </div>
           </Link>

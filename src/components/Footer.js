@@ -59,14 +59,19 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center mb-5">
-              {/* Footer is always dark background — use the dark logo */}
+            <Link href="/" className="flex items-center gap-3 mb-5">
               <img
                 src="/logo-dark.png"
                 alt="Jaman Engineering Works Limited"
                 className="h-16 w-auto object-contain"
                 style={{ filter: 'drop-shadow(0 2px 10px rgba(13,42,110,0.4))' }}
+                onError={function(e) { e.currentTarget.style.display = 'none' }}
               />
+              {/* Text fallback if logo file is missing */}
+              <div>
+                <div className="font-black text-xl" style={{ fontFamily: 'Barlow Condensed,sans-serif', color: '#cc1a1a' }}>JAMAN</div>
+                <div className="text-[0.58rem] tracking-[0.18em] uppercase" style={{ color: '#5b9bd5', opacity: 0.85 }}>Engineering Works Limited</div>
+              </div>
             </Link>
 
             <p className="text-sm opacity-50 leading-relaxed mb-6 max-w-sm">
